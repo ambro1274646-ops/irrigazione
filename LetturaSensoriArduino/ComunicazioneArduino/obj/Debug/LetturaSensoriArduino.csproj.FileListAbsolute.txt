@@ -1,0 +1,7 @@
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\bin\Debug\ComunicazioneArduino.exe.config
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\bin\Debug\ComunicazioneArduino.exe
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\bin\Debug\ComunicazioneArduino.pdb
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\obj\Debug\LetturaSensoriArduino.csproj.AssemblyReference.cache
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\obj\Debug\LetturaSensoriArduino.csproj.CoreCompileInputs.cache
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\obj\Debug\ComunicazioneArduino.exe
+C:\Users\andre\source\repos\ComunicazioneArduino\ComunicazioneArduino\obj\Debug\ComunicazioneArduino.pdb
