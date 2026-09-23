@@ -1,71 +1,55 @@
 <?php
-    // dashboard.php
+    $host     = "127.0.0.1";
+    $username = "root";
+    $password = "";
+    $database = "if0_42967232_irrigazione_db";
 
-$host     = "127.0.0.1";
-$username = "root";
-$password = "";
-$database = "if0_42967232_irrigazione_db";
+    $cookie_string = $_COOKIE["token"] ?? null;
+    if ($cookie_string === null) {
+        header("Location: index.html");
+        exit;
+    }
 
-// 1) Prendi il token dal cookie
-$token = $_COOKIE['token'] ?? null;
+    $conn = new mysqli($host, $username, $password, $database);
+    if ($conn->connect_error) {
+        die("Connessione fallita: " . $conn->connect_error);
+    }
 
-// Nessun cookie -> torna al login
-if ($token === null || $token === '') {
-    header("Location: /index.php");
-    exit;
-}
+    // --- 1) Token -> username (SICURO) ---
+    $stmt = $conn->prepare("SELECT username FROM cookies WHERE valore = ?");
+    $stmt->bind_param("s", $cookie_string);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// 2) Connessione DB
-$conn = new mysqli($host, $username, $password, $database);
-if ($conn->connect_error) {
-    error_log("DB connect error: " . $conn->connect_error);
-    http_response_code(500);
-    exit("Errore interno");
-}
+    if ($result->num_rows === 0) {
+        // Token non valido
+        setcookie("token", "", time() - 3600, "/");
+        header("Location: index.html");
+        exit;
+    }
+    $row = $result->fetch_assoc();
+    $user_name = $row['username'];
+    $stmt->close();
 
-// 3) Cerca il token nella tabella cookies
-$stmt = $conn->prepare("SELECT username FROM cookies WHERE valore = ? LIMIT 1");
-$stmt->bind_param("s", $token);
-$stmt->execute();
-$row = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+    // --- 2) username -> super_user (SICURO) ---
+    $stmt = $conn->prepare("SELECT super_user FROM utenti WHERE username = ?");
+    $stmt->bind_param("s", $user_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// 4) Token non trovato -> cookie non valido, torna al login
-if (!$row) {
-    setcookie("token", "", [
-        'expires'  => time() - 3600,
-        'path'     => '/',
-        'secure'   => true,
-        'httponly' => true,
-        'samesite' => 'Strict',
-    ]);
+    if ($result->num_rows === 0) {
+        header("Location: index.html");
+        setcookie("token", "", time() - 3600, "/");
+        exit;
+    }
+    $row = $result->fetch_assoc();
+    $stmt->close();
     $conn->close();
-    header("Location: /index.php");
-    exit;
-}
 
-// 5) Autenticato
-$utente_loggato = $row['username'];
-$conn->close();
-?>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 700px; margin: 4rem auto; padding: 0 1rem; }
-        .box { border: 1px solid #ddd; border-radius: 10px; padding: 1.5rem; }
-        a.btn { display: inline-block; margin-top: 1rem; padding: .6rem 1rem; background: #333; color: #fff; text-decoration: none; border-radius: 6px; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h1>Ciao, <?= htmlspecialchars($utente_loggato, ENT_QUOTES, 'UTF-8') ?> 👋</h1>
-        <p>Sei autenticato correttamente.</p>
-        <a class="btn" href="/logout.php">Logout</a>
-    </div>
-</body>
-</html>
+    if ($row['super_user'] === 't') {
+        echo "super user";
+    } else {
+        echo "utente normale";
+    }
+
 ?>
