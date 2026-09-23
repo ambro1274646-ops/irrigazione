@@ -63,7 +63,6 @@
 
 
     //Inserisco anche i pin dei dispositivi che vanno utilizzati dalla tabella "schedulazione" per ogni giorno: formato: pin|pin1...
-
     $risposta_json='{"sistema":123,"schedulazione_settimana":[ ';
     $i=0;
     while ($row = $query_gen_result->fetch_assoc()) {
@@ -74,8 +73,7 @@
             }
             else{
                 $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . ',"dispositivi":"' . $row["dispositivi"] . '"},';
-            }
-            
+            } 
         }
         else if($i==6){
             if($row["ora_inizio"]==null){
@@ -83,8 +81,7 @@
             }
             else{
                 $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . ',"dispositivi":"' . $row["dispositivi"] . '"}]';
-            }
-            
+            } 
         }
         $i=$i+1;
     }
