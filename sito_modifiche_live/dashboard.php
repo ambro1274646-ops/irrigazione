@@ -1,9 +1,9 @@
 <?php
     // dashboard.php
 
-$host     = "sql300.infinityfree.com";
-$username = "if0_42967232";
-$password = "Ambro666Ambro";
+$host     = "127.0.0.1";
+$username = "root";
+$password = "";
 $database = "if0_42967232_irrigazione_db";
 
 // 1) Prendi il token dal cookie
