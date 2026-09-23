@@ -1,3 +1,11 @@
+<?php
+  if(isset($_COOKIE["token"])){
+      header("Location: dashboard_home.php");
+      exit();
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -515,3 +523,4 @@
 </script>
 </body>
 </html>
+
