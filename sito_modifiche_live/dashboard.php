@@ -11,7 +11,7 @@ $token = $_COOKIE['token'] ?? null;
 
 // Nessun cookie -> torna al login
 if ($token === null || $token === '') {
-    header("Location: /index.php?errore=non_loggato");
+    header("Location: /index.php");
     exit;
 }
 
