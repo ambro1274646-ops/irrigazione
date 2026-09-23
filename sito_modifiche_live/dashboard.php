@@ -32,7 +32,7 @@
     $stmt->close();
 
     // --- 2) username -> super_user (SICURO) ---
-    $stmt = $conn->prepare("SELECT super_user FROM utenti WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id_utente,super_user FROM utenti WHERE username = ?");
     $stmt->bind_param("s", $user_name);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -46,10 +46,25 @@
     $stmt->close();
     $conn->close();
 
+    $id_utente=$row["id_utente"];
     if ($row['super_user'] === 't') {
-        echo "super user";
-    } else {
-        echo "utente normale";
+        //Super User:
+        //Devo prendere tutti i nomi_db
+        $query="SELECT * FROM super_utenti WHERE id_utente=" . $id_utente;
+        $conn= new mysqli($host, $username, $password, $database);
+        $result=$conn->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+            // $row è un array associativo: ['id_utente' => 1, 'nome' => '...', ...]
+            echo $row['nome'] . "<br>";
+        }
+
+
+    }
+
+    else {
+        //Utente Normale: 1 solo impianto.
+        
     }
 
 ?>
