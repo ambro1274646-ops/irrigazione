@@ -40,7 +40,7 @@ if (!$row) {
         'samesite' => 'Strict',
     ]);
     $conn->close();
-    header("Location: /index.php?errore=token_invalid");
+    header("Location: /index.php");
     exit;
 }
 
