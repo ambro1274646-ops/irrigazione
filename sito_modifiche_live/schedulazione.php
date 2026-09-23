@@ -1,8 +1,8 @@
 <?php
     // Parametri di connessione
-    $host = "sql300.infinityfree.com";
-    $username = "if0_42967232";
-    $password = "Ambro666Ambro";
+    $host = "127.0.0.1";
+    $username = "root";
+    $password = "";
     $database = "if0_42967232_irrigazione_db";
 
     $mysqli = new mysqli($host, $username, $password, $database);
@@ -70,19 +70,19 @@
         // qui uso $row['nome_colonna']
         if($i<6){
             if($row["ora_inizio"]==null){
-                $risposta_json=$risposta_json . '{"orario":"null","durata":null,"giorno":' . $row["id_giorno"] . '"dispositivi":"null"},';
+                $risposta_json=$risposta_json . '{"orario":"null","durata":null,"giorno":' . $row["id_giorno"] . ',"dispositivi":"null"},';
             }
             else{
-                $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . '"dispositivi":"' . $row["dispositivi"] . '"},';
+                $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . ',"dispositivi":"' . $row["dispositivi"] . '"},';
             }
             
         }
         else if($i==6){
             if($row["ora_inizio"]==null){
-                $risposta_json=$risposta_json . '{"orario":"null","durata":null,"giorno":' . $row["id_giorno"] . '"dispositivi":"null"}]';
+                $risposta_json=$risposta_json . '{"orario":"null","durata":null,"giorno":' . $row["id_giorno"] . ',"dispositivi":"null"}]';
             }
             else{
-                $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . '"dispositivi":"' . $row["dispositivi"] . '"}]';
+                $risposta_json=$risposta_json . '{"orario":"' . $row["ora_inizio"] . '","durata":' . (string) $row["durata"] . ',"giorno":' . $row["id_giorno"] . ',"dispositivi":"' . $row["dispositivi"] . '"}]';
             }
             
         }
